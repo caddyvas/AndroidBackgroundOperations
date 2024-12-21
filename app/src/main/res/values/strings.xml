@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">BackgroundOperations</string>
+
+    <string name="handler_name">HANDLER OPERATION</string>
+    <string name="background_service_name">BACKGROUND SERVICE OPERATION</string>
+    <string name="foreground_service_name">FOREGROUND SERVICE OPERATION</string>
+    <string name="coroutine_name">COROUTINE OPERATION</string>
+
+    <string name="start_thread">START THREAD</string>
+    <string name="stop_thread">STOP THREAD</string>
+
+    <string name="download_start">DOWNLOAD DATA</string>
+    <string name="download_stop">STOP DOWNLOAD</string>
+
+    <string name="start_service">START SERVICE</string>
+    <string name="stop_service">STOP SERVICE</string>
+
+    <string name="handler_explanation">A Handler allows communicating back with UI thread from other
+        background thread. A Handler allows you to send and process Message and Runnable objects associated
+        with a thread’s MessageQueue. Each Handler instance is associated with a single thread and that thread’s
+        message queue.</string>
+    <string name="background_service_explanation">Background Services does not need user intervention. These services do
+        not update users about the background tasks and users cannot access them. The processes such as Download Data from server,
+        syncing of data, storing data come under this service. This service runs only when the app is running and the service gets terminated
+        when the app is terminated.</string>
+    <string name="foreground_service_explanation">Foreground Services update the user about its ongoing operations. Users can interact with
+        the service by notifications provided about the ongoing task. Ex: Downloading file (user can keep track of progress),
+        Music player app, Fitness app records user’s fitness elements, Navigation app. Unless the Foreground Service is stopped by the application,
+        the service keeps running even though the app is closed.
+    </string>
+    <string name="bound_service_explanation">Bound Service runs only if the component it is bound to is still active. A bound service runs only as long as
+    another application component is bound to it. Multiple components can bind to the service at once, but when all of them unbind, the service is destroyed.</string>
+    <string name="coroutine_explanation">TO BE ADDED</string>
+
+</resources>
