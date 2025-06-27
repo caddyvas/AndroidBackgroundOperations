@@ -11,6 +11,7 @@
 
     <string name="download_start">DOWNLOAD DATA</string>
     <string name="download_stop">STOP DOWNLOAD</string>
+    <string name="more_on_coroutines">COROUTINES</string>
 
     <string name="start_service">START SERVICE</string>
     <string name="stop_service">STOP SERVICE</string>
@@ -30,6 +31,37 @@
     </string>
     <string name="bound_service_explanation">Bound Service runs only if the component it is bound to is still active. A bound service runs only as long as
     another application component is bound to it. Multiple components can bind to the service at once, but when all of them unbind, the service is destroyed.</string>
-    <string name="coroutine_explanation">TO BE ADDED</string>
-
+    <!-- Coroutine -->
+    <string name="coroutine_explanation">In Kotlin, a coroutine is a concurrency design pattern that facilitates writing asynchronous code in a sequential and readable style. They are often described as \"lightweight threads\" because they enable concurrent
+        execution of tasks without the overhead associated with traditional threads. In the world of Kotlin, a coroutine is a piece of code that can be suspended and resumed without blocking the executing thread.</string>
+    <!-- Coroutine builders -->
+    <string name="coroutine_builders">Coroutine builders create and launch coroutines. These builders offer a way to start
+        coroutines in various contexts and are essential for managing concurrent operations effectively.</string>
+    <string name="cor_builders_launch">It is used for fire and forget tasks or tasks that do not need to return a value. This function returns a Job object that launches a new coroutine without blocking the current thread, inherits the thread and coroutine scope of the immediate parent coroutine</string>
+    <string name="cor_builders_async">Async is known for parallel execution of different tasks as it waits for all the tasks to be completed and returns \"deferred\" object. It calls the suspending function \"await\" on the deferred value
+        to wait and get the result. Like launch, async runs without blocking the main thread.</string>
+    <string name="cor_builders_runblocking">runBlocking blocks the current thread on which it is invoked until the coroutine is completed. It runs
+        the coroutine in the context on the thread it is invoked. It is mainly used for testing or bridging non-suspending code
+        with suspending code.</string>
+    <!-- Coroutine Scopes -->
+    <string name="coroutine_scope_explanation">Defines a scope for new coroutines to establish a structured way to manage their lifecycles and ensure proper resource management. A CoroutineScope is typically tied to a specific component or lifecycle, such as an android activity, fragment or viewmodel. When the associated
+     component is destroyed or its lifecycle ends, any coroutines launched within that scope are automatically canceled except Global Scope whose life cycle is tied to the entire application.</string>
+    <string name="cor_scope_global">This scope is a predefined global scope that lives as long as your application is running. It is not tied to any lifecycle, and the user need to be cautious while using it may lead to resource leaks if not managed properly.
+    </string>
+    <string name="cor_scope_coroutine">This scope is tied to a specific component or context, such as an Activity, Fragment, or ViewModel. It is a best practice to create a custom CoroutineScope for each of these components to manage efficiently. When the component is
+        destroyed, all the coroutines within its scope are automatically canceled.</string>
+    <string name="cor_scope_lifecycle">This is an extension property from the androidx.lifecycle library, available for android components such as Activity and Fragment. It creates a CoroutineScope tied to the lifecycle of the component, ensuring that coroutines are canceled when the component is destroyed.</string>
+    <string name="cor_scope_viewmodel">This is another extension property available for Android ViewModel classes (from the androidx.lifecycle library) that automatically creates a CoroutineScope tied to the ViewModel\'s lifecycle. It is ideal for performing asynchronous tasks within ViewModels.</string>
+    <!-- Coroutine Dispatchers -->
+    <string name="coroutine_dispatcher_explanation">Dispatchers are responsible for assigning coroutines to specific threads or thread pools. They control the threading behaviour of coroutines, allowing user to specify which thread should execute a particular coroutine. In other terms, Dispatchers allow users to optimize
+    coroutine execution based on the type of task. For ex: user can offload long-running I/O operations to a background thread pool using Dispatchers.IO to prevent blocking the main thread and thereby keeping UI responsive.</string>
+    <string name="cor_dispatchers_io">I/O dispatcher is designed to handle system input/output operations in our code. Coroutines running on the IO dispatcher would not block the main thread.
+    This is suitable for IO intensive tasks such as reading and writing files, performing db queries or making network requests.</string>
+    <string name="cor_dispatchers_default">To perform CPU intensive functions, default dispatcher is used. Used for operations such as heavy calc like matrix multiplications, bigger list sorting,
+    filtering, searching, etc., scaling the bitmap available in memory, parsing the JSON available in memory.</string>
+    <string name="cor_dispatchers_unconfined">This dispatcher is not restricted to a particular thread. It starts a coroutine in the caller thread (corresponds to parent thread), but only until the
+    first suspension point. After the suspension it resumes the coroutine in a different thread.</string>
+    <string name="cor_dispatchers_main">Used in Android apps when user wants to interact with the UI. It is restricted to the main thread. Ex: Perform UI-related tasks</string>
+    <string name="cor_coroutine_context">The intended purpose of CoroutineContext parameter in launch is to provide additional context elements to override elements that would be otherwise inherited from a parent scope.
+         CoroutineContext inherits from parent scope or from scope within its running (flow context from parent to child)</string>
 </resources>

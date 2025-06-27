@@ -122,8 +122,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             COROUTINE -> {
-                intent = Intent(this@MainActivity, BackgroundActivity::class.java)
-                intent.putExtra("activityType", COROUTINE)
+                intent = Intent(this@MainActivity, CoroutineActivity::class.java)
                 startActivity(intent)
             }
         }

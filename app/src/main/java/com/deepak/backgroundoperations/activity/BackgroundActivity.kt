@@ -7,13 +7,19 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.View.VISIBLE
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.deepak.backgroundoperations.R
 import com.deepak.backgroundoperations.androidService.BackgroundService
 import com.deepak.backgroundoperations.androidService.ForegroundService
+import com.deepak.backgroundoperations.model.PhoneTypesResponse
 import com.deepak.backgroundoperations.networkServices.PhoneTypesAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -39,6 +45,10 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.background_activity)
+
+        // add action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+
         countTextView = findViewById(R.id.textView2)
         titleTextView = findViewById(R.id.textView1)
         descriptionTextView = findViewById(R.id.textView3)
@@ -77,13 +87,6 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
                 titleTextView.text = resources.getText(R.string.handler_name)
                 descriptionTextView.text = resources.getText(R.string.handler_explanation)
             }
-
-            MainActivity.COROUTINE -> {
-                titleTextView.text = resources.getText(R.string.coroutine_name)
-                buttonOne.text = resources.getText(R.string.download_start)
-                buttonTwo.text = resources.getText(R.string.download_stop)
-                descriptionTextView.text = resources.getText(R.string.coroutine_explanation)
-            }
         }
     }
 
@@ -106,17 +109,28 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
 
                     MainActivity.COROUTINE -> {
                         //backgroundOperationUsingCoroutine()
+                        //descriptionTextView.visibility = View.GONE
+                        val context = this
                         lifecycleScope.launch(Dispatchers.IO) {
-                           val response = PhoneTypesAPI().getPhoneTypes()
-                           if(response.isSuccessful) {
-                               Log.i(TAG, "Coroutine scope successful")
-                               for(phoneType in response.body()!!) {
-                                   Log.i(TAG, phoneType.name)
-                               }
-                           }else{
-                               Log.i(TAG, "Coroutine scope Failed")
-                           }
-                       }
+                            Log.i(TAG, "Launching Dispatchers IO in:" +
+                                    " ${Thread.currentThread().name}")
+                            val response = PhoneTypesAPI().getPhoneTypes()
+                            var responseList: ArrayList<PhoneTypesResponse> = response.body() as ArrayList<PhoneTypesResponse>
+                            // declare adapter and assign the adapter to listview's adapter
+                            val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, responseList)
+                            launch(Dispatchers.Main) {
+                                descriptionTextView.text = responseList.toString()
+                            }
+                            //listview.adapter = adapter
+                            if (response.isSuccessful) {
+                                Log.i(TAG, "Coroutine scope successful")
+                                for (phoneType in response.body()!!) {
+                                    Log.i(TAG, phoneType.name)
+                                }
+                            } else {
+                                Log.i(TAG, "Coroutine scope Failed")
+                            }
+                        }
                     }
                 }
             }

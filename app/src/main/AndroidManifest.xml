@@ -29,8 +29,15 @@
         <activity
             android:name=".activity.BackgroundActivity"
             android:exported="true"
+            android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.CoroutineActivity"
+            android:exported="true"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
 
         <service android:name=".androidService.BackgroundService" />
         <service android:name=".androidService.ForegroundService" />
