@@ -3,8 +3,10 @@ package com.deepak.backgroundoperations.activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,25 +18,35 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.deepak.backgroundoperations.activity.jetpacknavigation.NavHostGraph
 import com.deepak.backgroundoperations.androidService.ForegroundService
 
 class MainActivity : AppCompatActivity() {
+    private var initiateNavigationControllerState = mutableStateOf(false)
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                UiPageElements()
+                if (initiateNavigationControllerState.value) {
+                    // using Jetpack Navigation for other Background operations
+                    val navHostController = rememberNavController()
+                    NavHostGraph(this, navHostController, initiateNavigationControllerState)
+                } else {
+                    UiPageElements()
+                }
             }
-
         }
     }
 
@@ -84,17 +96,19 @@ class MainActivity : AppCompatActivity() {
                 Text(text = "COROUTINE")
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    initiateNavigationControllerState.value = true
+                }, // this part deals with navigation controller
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text(text = "TOBEADDED")
+                Text(text = "ESSENTIAL TOOLS")
             }
         }
     }
 
-    @Preview
+    @Preview(name = "Light Mode", showSystemUi = true)
     @Composable
     fun PreviewOfUiPageElements() {
         UiPageElements()

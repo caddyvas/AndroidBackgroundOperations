@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -41,6 +45,12 @@
 
         <service android:name=".androidService.BackgroundService" />
         <service android:name=".androidService.ForegroundService" />
+
+        <receiver android:name=".activity.jetpacknavigation.alarmmanager.AlarmReceiver" />
+        <service
+            android:name=".activity.jetpacknavigation.alarmmanager.AlarmService"
+            android:foregroundServiceType="specialUse" />
+
     </application>
 
 </manifest>

@@ -7,22 +7,16 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.View.VISIBLE
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ListView
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.deepak.backgroundoperations.R
 import com.deepak.backgroundoperations.androidService.BackgroundService
 import com.deepak.backgroundoperations.androidService.ForegroundService
-import com.deepak.backgroundoperations.model.PhoneTypesResponse
-import com.deepak.backgroundoperations.networkServices.PhoneTypesAPI
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,6 +30,7 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
     private lateinit var descriptionTextView: TextView
     private lateinit var buttonOne: Button
     private lateinit var buttonTwo: Button
+    private lateinit var infoImageView: ImageView
     private var activityType by Delegates.notNull<Int>()
 
     private var handler: Handler = Handler(Looper.getMainLooper())
@@ -54,6 +49,8 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
         descriptionTextView = findViewById(R.id.textView3)
         buttonOne = findViewById(R.id.button1)
         buttonOne.setOnClickListener(this)
+        infoImageView = findViewById(R.id.infoImageView)
+        infoImageView.setOnClickListener(this)
         buttonTwo = findViewById(R.id.button2)
         buttonTwo.setOnClickListener(this)
         activityType = intent.extras?.getInt("activityType") ?: 0
@@ -92,6 +89,14 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
+            // info button
+            R.id.infoImageView -> {
+               val builder = AlertDialog.Builder(this)
+                builder.setTitle("Background Operations")
+                builder.setMessage(resources.getText(R.string.background_operations_explanation))
+                builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss()}
+                builder.show()
+            }
             R.id.button1 -> {
                 when (activityType) {
                     MainActivity.BACKGROUND_SERVICE -> {
@@ -105,32 +110,6 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
                     MainActivity.HANDLER -> {
                         isThreadStart = true
                         threadFunctionUsingHandler()
-                    }
-
-                    MainActivity.COROUTINE -> {
-                        //backgroundOperationUsingCoroutine()
-                        //descriptionTextView.visibility = View.GONE
-                        val context = this
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            Log.i(TAG, "Launching Dispatchers IO in:" +
-                                    " ${Thread.currentThread().name}")
-                            val response = PhoneTypesAPI().getPhoneTypes()
-                            var responseList: ArrayList<PhoneTypesResponse> = response.body() as ArrayList<PhoneTypesResponse>
-                            // declare adapter and assign the adapter to listview's adapter
-                            val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, responseList)
-                            launch(Dispatchers.Main) {
-                                descriptionTextView.text = responseList.toString()
-                            }
-                            //listview.adapter = adapter
-                            if (response.isSuccessful) {
-                                Log.i(TAG, "Coroutine scope successful")
-                                for (phoneType in response.body()!!) {
-                                    Log.i(TAG, phoneType.name)
-                                }
-                            } else {
-                                Log.i(TAG, "Coroutine scope Failed")
-                            }
-                        }
                     }
                 }
             }
@@ -195,25 +174,6 @@ class BackgroundActivity : AppCompatActivity(), OnClickListener {
                 }, 1000)
             }
         }).start()
-    }
-
-    private fun backgroundOperationUsingCoroutine() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            Log.i(TAG, "Starting coroutine in Thread: ${Thread.currentThread().name}")
-            val response = doNetworkCall()
-            withContext(Dispatchers.Main) {
-                Log.i(TAG, "Inside coroutine context in Thread: ${Thread.currentThread().name}")
-                // update the text View with the result
-                countTextView.text = response
-            }
-        }
-    }
-
-    private suspend fun doNetworkCall(): String {
-        // assume there is a rest service call
-        delay(3000L)
-        return "{Success: 200}"
-
     }
 }
 

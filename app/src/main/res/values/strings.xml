@@ -24,6 +24,9 @@
         not update users about the background tasks and users cannot access them. The processes such as Download Data from server,
         syncing of data, storing data come under this service. This service runs only when the app is running and the service gets terminated
         when the app is terminated.</string>
+    <string name="background_operations_explanation">In Android development, background operations refer to tasks that run independently of the UI, ensuring main thread remains free
+     to handle user interactions. These operations are essential for performing tasks that take time, such as network requests, syncing data, location updates, fetching database content, etc. Modern Android
+    versions have introduced restrictions on background execution to improve battery life and system performance, thereby encouraging developers to use more efficient methods for background tasks.</string>
     <string name="foreground_service_explanation">Foreground Services update the user about its ongoing operations. Users can interact with
         the service by notifications provided about the ongoing task. Ex: Downloading file (user can keep track of progress),
         Music player app, Fitness app records user’s fitness elements, Navigation app. Unless the Foreground Service is stopped by the application,
@@ -64,4 +67,14 @@
     <string name="cor_dispatchers_main">Used in Android apps when user wants to interact with the UI. It is restricted to the main thread. Ex: Perform UI-related tasks</string>
     <string name="cor_coroutine_context">The intended purpose of CoroutineContext parameter in launch is to provide additional context elements to override elements that would be otherwise inherited from a parent scope.
          CoroutineContext inherits from parent scope or from scope within its running (flow context from parent to child)</string>
+    <!-- Essential Tools -->
+    <string name="essential_tools_work_manager">WorkManager is an Android Jetpack library that provides a flexible and efficient way to schedule and manage background tasks in your app.  With WorkManager, you can schedule asynchronous, deferred, and periodic tasks that need to run even when the app is not in the foreground.
+    WorkManager supports three different types of work requests:\n\n OneTimeWorkRequest, PeriodicWorkRequest, CoroutineWorker</string>
+    <string name="essential_tools_work_manager_example">In this screen, a background task that displays a notification is scheduled. On pressing the button on screen, after a minute, Worker Class doWork() gets called by WorkManager to perform the background task. This is a one time notification as we mentioned OneTimeWorkRequest by defining a WorkRequest object.</string>
+    <string name="essential_tools_alarm_manager_example">Alarm Manager is used in tasks requiring exact timing, such as setting alarms or reminders. In this example, a notification is sent after 5 seconds of user pressing the button. This is achieved using Alarm manager object calling setExactAndAllowWhileIdle(), which is used for one-time alarm fired on the given time,
+    using Pending Intent (token that can be passed to another application or the system to perform an action on user\'s behalf) and using Broadcast operations along with Service() (to send events) and BroadcastReceiver() (to receive events).</string>
+    <string name="essential_tools_job_scheduler">JobScheduler is designed for scheduling jobs based on specific conditions like network connectivity or charging status. Job scheduler allows developers to schedule background tasks (jobs) to run at a specific time, when certain conditions are met or on a recurring basis. It provides more
+        control over job constraints but does not handle Doze mode as efficiently as WorkManager. It is designed to optimize battery usage and system resources by allowing the system to group and execute jobs together.</string>
+    <string name="essential_tools_alarm_manager">Alarm Manager is used for scheduling tasks to occur at precise times or intervals. It can trigger alarms at exact times, which is vital for some use cases (session timeout).</string>
+    <string name="essential_tools_executor_service"></string>
 </resources>
