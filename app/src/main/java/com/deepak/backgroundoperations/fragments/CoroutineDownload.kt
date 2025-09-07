@@ -41,7 +41,6 @@ import androidx.lifecycle.lifecycleScope
 import com.deepak.backgroundoperations.R
 import com.deepak.backgroundoperations.model.PhoneTypesResponse
 import com.deepak.backgroundoperations.viewModel.PhoneNameViewModel
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -230,9 +229,9 @@ class CoroutineDownload: Fragment(), FragmentUtilsBase {
 
     private fun async(): String {
         var threadName = ""
-        var deferred: Deferred<Int>
-        lifecycleScope.async {
-            deferred = async {
+
+        lifecycleScope.launch {
+            val deferred = async {
                 threadName = Thread.currentThread().name
                 5
             }

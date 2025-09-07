@@ -48,9 +48,10 @@
         with suspending code.</string>
     <!-- Coroutine Scopes -->
     <string name="coroutine_scope_explanation">Defines a scope for new coroutines to establish a structured way to manage their lifecycles and ensure proper resource management. A CoroutineScope is typically tied to a specific component or lifecycle, such as an android activity, fragment or viewmodel. When the associated
-     component is destroyed or its lifecycle ends, any coroutines launched within that scope are automatically canceled except Global Scope whose life cycle is tied to the entire application.</string>
-    <string name="cor_scope_global">This scope is a predefined global scope that lives as long as your application is running. It is not tied to any lifecycle, and the user need to be cautious while using it may lead to resource leaks if not managed properly.
-    </string>
+     component is destroyed or its lifecycle ends, any coroutines launched within that scope are automatically canceled except Global Scope whose life cycle is tied to the entire application.\n\n<b>Without dispatcher - Dispatchers.Default:</b>\nUses a shared pool of background threads (worker threads)\nGlobalScope.launch{…}
+        - Runs in one of the worker threads\n\nlifecycleScope.launch { … } runs on the main thread by default.\n\nviewModelScope.launch { … } runs on the main thread by default.</string>
+    <string name="cor_scope_global">This scope is a predefined global scope that lives as long as your application is running. It is not tied to any lifecycle, and the user need to be cautious while using it may lead to resource leaks or uncontrolled coroutines if not managed properly. Prefer viewModelScope, lifecycleScope, or CoroutineScope
+        tied to your component lifecycle.</string>
     <string name="cor_scope_coroutine">This scope is tied to a specific component or context, such as an Activity, Fragment, or ViewModel. It is a best practice to create a custom CoroutineScope for each of these components to manage efficiently. When the component is
         destroyed, all the coroutines within its scope are automatically canceled.</string>
     <string name="cor_scope_lifecycle">This is an extension property from the androidx.lifecycle library, available for android components such as Activity and Fragment. It creates a CoroutineScope tied to the lifecycle of the component, ensuring that coroutines are canceled when the component is destroyed.</string>
