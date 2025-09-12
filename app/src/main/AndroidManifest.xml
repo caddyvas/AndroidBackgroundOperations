@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
+        android:name=".BGOApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -40,6 +41,36 @@
             android:name=".activity.CoroutineActivity"
             android:exported="true"
             android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.launchModes.LaunchModesActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.launchModes.LaunchModeA"
+            android:launchMode="standard"
+            android:parentActivityName=".activity.launchModes.LaunchModesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.launchModes.LaunchModeB"
+            android:launchMode="singleTask"
+            android:parentActivityName=".activity.launchModes.LaunchModeA"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.launchModes.LaunchModeC"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.launchModes.LaunchModeB"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.launchModes.LaunchModeD"
+            android:launchMode="singleInstance"
+            android:parentActivityName=".activity.launchModes.LaunchModeC"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 

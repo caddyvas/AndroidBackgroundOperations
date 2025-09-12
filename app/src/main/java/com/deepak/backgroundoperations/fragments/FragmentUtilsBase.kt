@@ -1,10 +1,13 @@
 package com.deepak.backgroundoperations.fragments
 
-import android.widget.TextView
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
@@ -39,13 +42,19 @@ interface FragmentUtilsBase {
                 Text(text = title)
             },
             text = {
-                Text(text = content) // comes from strings.xml
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(text = content)
+                } // comes from strings.xml
             }
         )
     }
 
     @Composable
-    fun InfoButton(onClick: () -> Unit) {
+    fun InfoButton(onClick: () -> Unit) { // Kotlin’s trailing lambda syntax, which lets you write it outside the parentheses if the last parameter is a lambda.
         Box(
             modifier = Modifier
                 .fillMaxSize()

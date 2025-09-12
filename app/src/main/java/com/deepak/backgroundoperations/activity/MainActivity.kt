@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.deepak.backgroundoperations.activity.jetpacknavigation.NavHostGraph
+import com.deepak.backgroundoperations.activity.launchModes.LaunchModesActivity
 import com.deepak.backgroundoperations.androidService.ForegroundService
 
 class MainActivity : AppCompatActivity() {
@@ -105,6 +106,16 @@ class MainActivity : AppCompatActivity() {
             ) {
                 Text(text = "ESSENTIAL TOOLS")
             }
+            Button(
+                onClick = {
+                    openActivity(LAUNCH_MODES)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(text = "LAUNCH MODES")
+            }
         }
     }
 
@@ -115,31 +126,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openActivity(activityToOpen: Int) {
-        val intent: Intent
+        var intent: Intent? = null
         when (activityToOpen) {
             BACKGROUND_SERVICE -> {
                 intent = Intent(this@MainActivity, BackgroundActivity::class.java)
                 intent.putExtra("activityType", BACKGROUND_SERVICE)
-                startActivity(intent)
+
             }
 
             FOREGROUND_SERVICE -> {
                 intent = Intent(this@MainActivity, BackgroundActivity::class.java)
                 intent.putExtra("activityType", FOREGROUND_SERVICE)
-                startActivity(intent)
+
             }
 
             HANDLER -> {
                 intent = Intent(this@MainActivity, BackgroundActivity::class.java)
                 intent.putExtra("activityType", HANDLER)
-                startActivity(intent)
+
             }
 
             COROUTINE -> {
                 intent = Intent(this@MainActivity, CoroutineActivity::class.java)
-                startActivity(intent)
+
+            }
+
+            LAUNCH_MODES -> {
+                intent = Intent(this@MainActivity, LaunchModesActivity::class.java)
             }
         }
+        startActivity(intent)
     }
 
     /**
@@ -163,6 +179,7 @@ class MainActivity : AppCompatActivity() {
         const val FOREGROUND_SERVICE: Int = 1002
         const val HANDLER: Int = 1003
         const val COROUTINE: Int = 1004
+        const val LAUNCH_MODES = 1005
     }
 }
 
